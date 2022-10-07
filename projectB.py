@@ -5,8 +5,6 @@ Created on Wed Sep 28 13:05:08 2022
 @author: jingy
 """
 
-import math 
-
 codons_dict = {"UUU":"Phe", "UUC":"Phe", "UUA":"Leu", "UUG":"Leu",
           "UCU":"Ser", "UCC":"Ser", "UCA":"Ser", "UCG":"Ser",
           "UAU":"Tyr", "UAC":"Tyr", "UAA":"STOP", "UAG":"STOP",
