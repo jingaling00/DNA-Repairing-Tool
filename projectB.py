@@ -185,8 +185,7 @@ def count(sub,ref):
  # total number of point mutations
     # count number of times repair runs
     
-
-if __name__ == '__main__':
+def main():
     ref = readFile('ref.txt')
     dna1 = readFile('dna1.txt')
     dna2 = readFile('dna2.txt')   
@@ -202,3 +201,5 @@ if __name__ == '__main__':
             synon = 'not synonymous'
         
         print(f'Subject {dna_samples.index(dna) + 1} DNA has {n} and is {synon}')
+
+main()
