@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 """
+Created on Mon Oct 10 16:10:49 2022
+
+@author: jingy
+"""
+
+
+# -*- coding: utf-8 -*-
+"""
 Created on Wed Sep 28 13:05:08 2022
 
 @author: jingy
@@ -21,9 +29,6 @@ codons_dict = {"UUU":"Phe", "UUC":"Phe", "UUA":"Leu", "UUG":"Leu",
           "GCU":"Ala", "GCC":"Ala", "GCA":"Ala", "GCG":"Ala",
           "GAU":"Asp", "GAC":"Asp", "GAA":"Glu", "GAG":"Glu",
           "GGU":"Gly", "GGC":"Gly", "GGA":"Gly", "GGG":"Gly"}
-        
-def main():
-    """ Write your code here """
     
 def readFile(fileName):
     """
@@ -187,22 +192,13 @@ if __name__ == '__main__':
     dna2 = readFile('dna2.txt')   
     dna3 = readFile('dna3.txt') 
     dna_samples = [dna1,dna2,dna3]
-    mutation_counts = []
-    synon_values = []
     
     for dna in dna_samples:
         n = count(dna,ref)
-        mutation_counts.append(n)
         
         if synonymous(dna,ref):
-            synon_values.append('synonymous')
+            synon = 'synonymous'
         else:
-            synon_values.append('not synonymous')
-            
-    print(f'Subject 1 DNA has {mutation_counts[0]} mutations and is {synon_values[0]}')
-    print(f'Subject 2 DNA has {mutation_counts[1]} mutations and is {synon_values[1]}')
-    print(f'Subject 3 DNA has {mutation_counts[2]} mutations and is {synon_values[2]}')
-
-    
-    
-    
+            synon = 'not synonymous'
+        
+        print(f'Subject {dna_samples.index(dna) + 1} DNA has {n} and is {synon}')
