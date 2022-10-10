@@ -67,11 +67,8 @@ def writeFile(fileName,text):
     """
     with open(fileName,'w') as textFile:
         textFile.write(text)
-        
-def pointMutation(file):
-    return None
 
-def transcribe(dna):
+def transcribe(dna): # perform 5' to 3' transcription: convert Thymine to Uracil
     mrna = []
     for base in dna:
         if base == 'T':
@@ -80,9 +77,7 @@ def transcribe(dna):
     mrna = ''.join(mrna)
     return mrna
 
-# perform transcription Thymine to Uracil
-
-def translate(mrna):
+def translate(mrna): # perform mRNA translation according to codons
     n = len(mrna)
     parsed_mrna = [mrna[i:i+3] for i in range(0,n-1,3)]
     amino_acids = []
@@ -92,9 +87,8 @@ def translate(mrna):
             amino_acids.append(codon)
     aa_sequence = ' '.join(amino_acids)
     return aa_sequence
-# perform mRNA translation
 
-def synonymous(sub,ref):
+def synonymous(sub,ref): # evaluate if two DNA sequences encode the same amino acids
     transcribe_sub = transcribe(sub)
     protein_sub = translate(transcribe_sub)
     
@@ -105,22 +99,21 @@ def synonymous(sub,ref):
         return True
     else:
         return False
-# encode same AA
 
-def delete(dna,i):
+def delete(dna,i): # perform nucleotide deletion at index i
     dna = dna[:i] + dna[i+1:]
     return dna # delete dna at index i
 
-def insert(dna,i,base):
+def insert(dna,i,base): # perform nucleotide insertion at index i
     dna = dna[:i] + base + dna[i:]
     return dna
 
-def substitute(dna,i,base):
+def substitute(dna,i,base): # perform nucleotide substitution at index i
     dna = dna[:i] + base + dna[i+1:]
     return dna
 
-def diff(sub,ref):
-    if len(sub) == len(ref):
+def diff(sub,ref): # evaluate first instance of nucleotide difference
+    if len(sub) == len(ref): 
         for i in range(len(sub)):
             j = ref[i]
             k = sub[i]
@@ -130,7 +123,7 @@ def diff(sub,ref):
             else:
                 continue
         return -1
-    elif len(sub) != len(ref):
+    elif len(sub) != len(ref): # use smaller length to account for length differences
         default = min(len(ref),len(sub))
         for i in range(default):
             j = ref[i]
@@ -141,11 +134,8 @@ def diff(sub,ref):
             else:
                 continue
         return default
-            # if all bases are same up to extraneous
-    #index of first difference 
 
-def repair(sub,ref):
-    
+def repair(sub,ref): # repair sub sequence using optimal adjustment function
     index_diff = diff(sub,ref)
   
     if index_diff == -1:
@@ -170,7 +160,7 @@ def repair(sub,ref):
         bestSub = max(index_diff, substituted, deletion_diff, insertion_diff)
         return repairs[bestSub]
 
-def count(sub,ref):
+def count(sub,ref): # count how many times repair function is called, until ref sequence is achieved
     if sub == ref:
         return 0
     else:
@@ -182,9 +172,6 @@ def count(sub,ref):
                 break
         return counter
     
- # total number of point mutations
-    # count number of times repair runs
-    
 def main():
     ref = readFile('ref.txt')
     dna1 = readFile('dna1.txt')
@@ -192,14 +179,14 @@ def main():
     dna3 = readFile('dna3.txt') 
     dna_samples = [dna1,dna2,dna3]
     
-    for dna in dna_samples:
+    for dna in dna_samples: # iterate through sample files
         n = count(dna,ref)
-        
         if synonymous(dna,ref):
             synon = 'synonymous'
         else:
             synon = 'not synonymous'
         
-        print(f'Subject {dna_samples.index(dna) + 1} DNA has {n} and is {synon}')
-
-main()
+        print(f'Subject {dna_samples.index(dna) + 1} DNA has {n} mutations and is {synon}')
+    
+if __name__ == "__main__":
+    main()
